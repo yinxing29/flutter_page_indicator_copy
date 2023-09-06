@@ -10,7 +10,7 @@ description: A new Flutter project.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+  sdk: ">=2.12.0 <3.2.0"
 
 dependencies:
   flutter:
@@ -18,13 +18,14 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
+  cupertino_icons: ^1.0.6
+  transformer_page_view:
+    git:
+      url: https://github.com/yinxing29/transformer_page_view_copy
+      ref: 8bc77c5d7a5435b82e0d1999ee0333adc7c82e93
 
   flutter_page_indicator:
     path: ../
-
-  transformer_page_view:
-    path: /Users/jzoom/SourceCode/transformer_page_view
 
 dev_dependencies:
   flutter_test:

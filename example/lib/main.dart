@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -40,7 +40,7 @@ class MyHomePage extends StatefulWidget {
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
 
-  final String title;
+  final String? title;
 
   @override
   _MyHomePageState createState() => new _MyHomePageState();
@@ -49,9 +49,9 @@ class MyHomePage extends StatefulWidget {
 class RadioGroup extends StatefulWidget {
   final List<String> titles;
 
-  final ValueChanged<int> onIndexChanged;
+  final ValueChanged<int>? onIndexChanged;
 
-  const RadioGroup({Key key, this.titles, this.onIndexChanged})
+  const RadioGroup({Key? key, required this.titles, this.onIndexChanged})
       : super(key: key);
 
   @override
@@ -74,10 +74,12 @@ class _RadioGroupState extends State<RadioGroup> {
             new Radio<int>(
                 value: index,
                 groupValue: _index,
-                onChanged: (int index) {
+                onChanged: (int? index) {
                   setState(() {
-                    _index = index;
-                    widget.onIndexChanged(_index);
+                    if (index != null && widget.onIndexChanged != null) {
+                      _index = index;
+                      widget.onIndexChanged!(_index);
+                    }
                   });
                 }),
             new Text(title)
@@ -93,12 +95,10 @@ class _RadioGroupState extends State<RadioGroup> {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _index = 1;
-
   double size = 20.0;
   double activeSize = 30.0;
 
-  PageController controller;
+  late PageController controller;
 
   PageIndicatorLayout layout = PageIndicatorLayout.SLIDE;
 
@@ -135,7 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
     ];
     return new Scaffold(
         appBar: new AppBar(
-          title: new Text(widget.title),
+          title: new Text(widget.title ?? ""),
         ),
         body: new Column(
           children: <Widget>[
@@ -143,9 +143,9 @@ class _MyHomePageState extends State<MyHomePage> {
               children: <Widget>[
                 new Checkbox(
                     value: loop,
-                    onChanged: (bool value) {
+                    onChanged: (bool? value) {
                       setState(() {
-                        if (value) {
+                        if (value == true) {
                           controller = new TransformerPageController(
                               itemCount: 4, loop: true);
                         } else {
@@ -153,7 +153,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             initialPage: 0,
                           );
                         }
-                        loop = value;
+                        loop = value ?? false;
                       });
                     }),
                 new Text("loop"),
@@ -166,7 +166,6 @@ class _MyHomePageState extends State<MyHomePage> {
               }).toList(),
               onIndexChanged: (int index) {
                 setState(() {
-                  _index = index;
                   layout = layouts[index];
                 });
               },
@@ -177,7 +176,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 loop
                     ? new TransformerPageView.children(
                         children: children,
-                        pageController: controller,
+                        pageController: controller as TransformerPageController,
                       )
                     : new PageView(
                         controller: controller,
