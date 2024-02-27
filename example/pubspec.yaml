@@ -10,7 +10,7 @@ description: A new Flutter project.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.12.0 <3.2.0"
+  sdk: ">=2.12.0 <3.3.0"
 
 dependencies:
   flutter:
@@ -22,7 +22,7 @@ dependencies:
   transformer_page_view:
     git:
       url: https://github.com/yinxing29/transformer_page_view_copy
-      ref: 8bc77c5d7a5435b82e0d1999ee0333adc7c82e93
+      ref: 8a486a73537e45813ee4a060ab3e1299379b60c9
 
   flutter_page_indicator:
     path: ../
